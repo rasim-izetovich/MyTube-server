@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - '4200:4200' # маппинг порта 3000 контейнера на 3000 хоста
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mydb # пример для Postgres
+    depends_on:
+      - db
+    volumes:
+      - .:/app # удобно для dev, чтобы видеть изменения без пересборки (опционально)
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - '5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
