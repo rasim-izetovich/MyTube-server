@@ -29,6 +29,9 @@ async function bootstrap() {
 
 	app.disable('x-powered-by')
 
-	await app.listen(process.env.PORT || 4200)
+	// await app.listen(process.env.PORT || 4200)
+	const port = parseInt(process.env.PORT || '3000', 10)
+
+	await app.listen(port, '0.0.0.0')
 }
 bootstrap()
